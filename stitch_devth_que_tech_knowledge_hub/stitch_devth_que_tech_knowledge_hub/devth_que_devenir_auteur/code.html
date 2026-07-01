@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Devenez auteur - DevThèque</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@450&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e1e2ed",
+                        "surface-bright": "#faf8ff",
+                        "secondary-container": "#6df5e1",
+                        "on-background": "#191b23",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-low": "#f3f3fe",
+                        "primary-container": "#2563eb",
+                        "secondary": "#006b5f",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#ededf9",
+                        "tertiary": "#4d556b",
+                        "on-secondary-fixed-variant": "#005048",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#191b23",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#dae2fd",
+                        "background": "#faf8ff",
+                        "tertiary-container": "#656d84",
+                        "on-tertiary-container": "#eef0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface-variant": "#e1e2ed",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "inverse-surface": "#2e3039",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-dim": "#d9d9e5",
+                        "surface-container-high": "#e7e7f3",
+                        "primary-fixed": "#dbe1ff",
+                        "outline": "#737686",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "on-error": "#ffffff",
+                        "surface": "#faf8ff",
+                        "primary": "#004ac6",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#00201c",
+                        "on-secondary-container": "#006f64"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "container-max": "1280px",
+                        "stack-sm": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "base": "8px",
+                        "stack-lg": "40px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "450"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8fafc; /* Level 0 Background */
+        }
+        .form-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08); /* Level 2 Shadow */
+        }
+        .input-focus-ring:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface bg-background">
+<!-- Navigation -->
+<nav class="bg-surface-container-lowest dark:bg-on-background border-b border-outline-variant dark:border-outline shadow-sm sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-16">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">DevThèque</div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Le Blog</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Dashboard</a>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-bold active:scale-95 transition-transform">New Article</button>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a developer in their 30s, smiling warmly against a soft-focus office background. The lighting is crisp and natural, highlighting a friendly and expert mentor persona. The color palette is clean, dominated by soft whites and professional blues, fitting a modern tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCuE-Pdtg-4Yrg88608QNbsPJ2yUQe2xK2DmmoEvpoYaRIuk5pk_KEWTen8FEqhe-VQSfMbEopfFyNgs-G4UhqhvFpTQ_DBhi2hKut9HPhQENtED3cUb4ZG1JO_AcdezqIq72SLbWdK0rf1cYSBvxTy6by0r9DhxJOXFRMT1CdkAAaQOSus6JROkldWTo3uAjvekoVCU43f62OV76Q0386nb_AblWkeSBwBiKHlVon2p7gua9MWJ95boEEuj9DwkFBEUHhQskgUEs"/>
+</div>
+</div>
+<!-- Mobile Menu Toggle (simplified) -->
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="min-h-screen py-stack-lg px-margin-mobile md:px-margin-desktop">
+<div class="max-w-3xl mx-auto">
+<!-- Header Section -->
+<div class="text-center mb-stack-lg">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-stack-md text-on-surface">Devenez auteur sur DevThèque</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">
+                    Partagez votre expertise avec la communauté et aidez la prochaine génération de développeurs.
+                </p>
+</div>
+<!-- Form Card -->
+<div class="form-card rounded-xl p-8 md:p-12">
+<form class="space-y-stack-md" id="authorForm">
+<!-- Expertise Field -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2" for="expertise">DOMAINE D'EXPERTISE</label>
+<input class="w-full rounded-lg border-[#cbd5e1] p-3 text-body-md input-focus-ring bg-surface-bright" id="expertise" name="expertise" placeholder="ex: Frontend, DevOps, AI" required="" type="text"/>
+</div>
+<!-- Bio Field -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2" for="bio">BIO / MOTIVATION</label>
+<textarea class="w-full rounded-lg border-[#cbd5e1] p-3 text-body-md input-focus-ring bg-surface-bright" id="bio" name="bio" placeholder="Décrivez votre parcours et pourquoi vous souhaitez contribuer à DevThèque..." required="" rows="5"></textarea>
+</div>
+<!-- Links Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2" for="github">LIEN GITHUB</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">link</span>
+<input class="w-full rounded-lg border-[#cbd5e1] pl-10 pr-3 py-3 text-body-md input-focus-ring bg-surface-bright" id="github" name="github" placeholder="https://github.com/..." type="url"/>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2" for="linkedin">LIEN LINKEDIN</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">link</span>
+<input class="w-full rounded-lg border-[#cbd5e1] pl-10 pr-3 py-3 text-body-md input-focus-ring bg-surface-bright" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." type="url"/>
+</div>
+</div>
+</div>
+<div class="flex items-start gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<p class="text-[13px] leading-tight text-on-surface-variant">L'un des deux liens (GitHub ou LinkedIn) est requis pour l'examen de votre candidature.</p>
+</div>
+<!-- Submit Button -->
+<div class="pt-stack-md">
+<button class="w-full bg-primary-container hover:bg-primary text-white font-bold py-4 rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+<span>Envoyer ma candidature</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</form>
+<!-- Footer Note -->
+<div class="mt-8 pt-8 border-t border-outline-variant text-center">
+<p class="font-body-md text-on-surface-variant italic">
+                        Une fois soumis, un administrateur examinera votre profil. Nous vous contacterons par email sous 48h.
+                    </p>
+</div>
+</div>
+<!-- Aesthetic Illustration/Pattern -->
+<div class="mt-stack-lg flex justify-center gap-4 opacity-40">
+<div class="h-1 w-12 bg-primary rounded-full"></div>
+<div class="h-1 w-4 bg-secondary rounded-full"></div>
+<div class="h-1 w-4 bg-tertiary-container rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant dark:border-outline">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright mb-stack-md md:mb-0">DevThèque</div>
+<div class="flex flex-wrap justify-center gap-gutter mb-stack-md md:mb-0">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant opacity-80">
+                © 2024 DevThèque. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+        // Form Validation for GitHub/LinkedIn Requirement
+        document.getElementById('authorForm').addEventListener('submit', function(e) {
+            const github = document.getElementById('github').value;
+            const linkedin = document.getElementById('linkedin').value;
+            
+            if (!github && !linkedin) {
+                e.preventDefault();
+                alert("Veuillez fournir au moins un lien (GitHub ou LinkedIn) pour votre candidature.");
+            } else {
+                // Mock success interaction
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Envoi en cours...`;
+                
+                setTimeout(() => {
+                    btn.classList.replace('bg-primary-container', 'bg-secondary');
+                    btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Candidature envoyée !`;
+                    setTimeout(() => {
+                        alert("Merci ! Votre candidature a bien été reçue. Notre équipe l'étudiera sous 48h.");
+                        btn.disabled = false;
+                        btn.classList.replace('bg-secondary', 'bg-primary-container');
+                        btn.innerHTML = originalText;
+                        e.target.reset();
+                    }, 1000);
+                }, 1500);
+            }
+        });
+    </script>
+</body></html>

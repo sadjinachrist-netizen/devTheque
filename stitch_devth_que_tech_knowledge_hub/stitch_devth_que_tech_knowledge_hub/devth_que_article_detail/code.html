@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Maîtriser les Server Components en React 19 | DevThèque</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-fixed": "#131b2e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#d9d9e5",
+                    "on-background": "#191b23",
+                    "outline": "#737686",
+                    "background": "#faf8ff",
+                    "surface-container-low": "#f3f3fe",
+                    "secondary-container": "#6df5e1",
+                    "surface-variant": "#e1e2ed",
+                    "on-surface": "#191b23",
+                    "tertiary-container": "#656d84",
+                    "surface-container": "#ededf9",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface": "#faf8ff",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-container-highest": "#e1e2ed",
+                    "primary-fixed": "#dbe1ff",
+                    "inverse-on-surface": "#f0f0fb",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#00174b",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary": "#4d556b",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#0053db",
+                    "secondary": "#006b5f",
+                    "on-secondary-container": "#006f64",
+                    "on-primary-container": "#eeefff",
+                    "surface-container-high": "#e7e7f3",
+                    "inverse-surface": "#2e3039",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#dae2fd",
+                    "primary-container": "#2563eb",
+                    "on-error-container": "#93000a",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#71f8e4",
+                    "outline-variant": "#c3c6d7",
+                    "on-tertiary-container": "#eef0ff",
+                    "on-surface-variant": "#434655"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "4px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "stack-md": "16px",
+                    "margin-desktop": "32px",
+                    "stack-lg": "40px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Inter", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"],
+                    "label-caps": ["Inter", "sans-serif"],
+                    "code-sm": ["JetBrains Mono", "monospace"],
+                    "headline-md": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                    "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                    "code-sm": ["14px", { "lineHeight": "20px", "fontWeight": "450" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #faf8ff;
+            color: #191b23;
+        }
+        .code-block {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            color: #f1f5f9;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+        }
+        .keyword { color: #4fdcbe; }
+        .function { color: #6df5e1; }
+        .string { color: #dbe1ff; }
+        .comment { color: #64748b; }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+            line-height: 1.75;
+        }
+
+        .pull-quote {
+            border-left: 4px solid #004ac6;
+            padding-left: 1.5rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+            color: #004ac6;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-extrabold text-primary dark:text-inverse-primary">DevThèque</span>
+<div class="hidden md:flex items-center gap-6 font-body-md text-body-md">
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary font-bold pb-1 active:scale-95 transition-transform" href="#">Le Blog</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">Dashboard</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-4 py-1.5 border border-outline-variant">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Rechercher..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">notifications</button>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-all active:scale-95 shadow-sm">
+                    New Article
+                </button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a smiling web developer in his thirties, wearing a modern minimalist navy blue hoodie. Soft lighting with a neutral, bright tech-office background. High resolution, professional photography aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlCMGpC5T4VWpdr34PEo7s1aSNYNXlPHRYEIJVO_hO7FNjyKk7NdA7-wgJoCHEdyn5nWBUl13kKPRmF1fbMWHIi8vMC-uycr7Bf6z1z2UCjR42hoIzhCywyxEunN5d1LQRh--AKkWyIQr_KNaobumevXwC-BlRUw1T_WfaPGzluRnOlFe_mo3e7bMHPDP4bKaYk_hD8z0M8-n-krXU-2o_RpNc_X8NarbUWmbC88JM-X26YkPJSOAPxfqk8Lyq4nK0FZBH-L_UNX8"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-desktop py-stack-lg">
+<!-- Header Section -->
+<header class="max-w-[800px] mx-auto mb-12">
+<nav class="flex items-center gap-2 mb-6 font-label-caps text-label-caps text-on-surface-variant tracking-wider">
+<a class="hover:text-primary transition-colors" href="#">LE BLOG</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">WEB DEVELOPMENT</span>
+</nav>
+<h1 class="font-display-lg text-display-lg mb-6 leading-tight">Maîtriser les Server Components en React 19</h1>
+<div class="flex items-center gap-3 mb-10">
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-caps text-[11px] font-bold tracking-widest border border-secondary/20">WEB DEV</span>
+</div>
+<div class="flex items-center gap-4 p-6 bg-white border border-outline-variant rounded-xl shadow-sm">
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of Lucas Rivière, a senior software engineer with a friendly and expert demeanor. He has short hair and a neatly trimmed beard, wearing thick-rimmed glasses. The background is a blurred office interior with soft natural light and modern plants. Professional light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjoMplLeXRdVL7VYg3Pj8hpDlgs0zaJUtikDkcX90gZo0RjG_j1AVUGd5g1217iCcNC-ly3SIcykEA4dJq-vkrb9judl-BTGKIq5PlUxQyE-NYQtzLJOtVBSIon_GABGZW5EpzjUOIif4zLjBuOOhPAz9JXh1zClUDEConlcMHtn0ddCjrW-hi2RNwEc92idDhpOoICi4AEN77wwbobXNhSzdEL4GLEbCtGrz1fBL6fhGgbPnJIc-ow9FMUlUAtHtMBAbyLg2zKW0"/>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-lg">Lucas Rivière</span>
+<span class="text-on-surface-variant text-sm font-medium">Senior Frontend Engineer</span>
+<div class="flex items-center gap-2 mt-1 text-on-surface-variant text-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>12 Oct 2024</span>
+</div>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 rounded-full border border-outline-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">share</span>
+</button>
+<button class="p-2 rounded-full border border-outline-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">bookmark</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Graphic -->
+<section class="max-w-[1000px] mx-auto mb-16">
+<div class="relative w-full aspect-[21/9] rounded-2xl overflow-hidden shadow-lg border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="An abstract 3D digital illustration representing server-side rendering and component architecture. Glowing nodes are connected by ethereal lines of light in shades of deep blue and bright teal. Minimalist aesthetic with plenty of negative space, professional tech concept art. Bright, clean lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsMeSZtw7G3Ejws2pOw_LOFHMpxdg5ufR2NyYu6luq68Gp-1YAPMNCHxmYASYiwmeBPS9jSV2fYTvvN_FqZLdxARtou4U9gLSPFLNqAdeRKuJivP8L1rbm-nyNECqgcoFDz3tt5nmprDEfW5Y9UpIwa6L6sPGTcudJj6ni-AZ6NkjhqRjMr1RojyGr4XZBSQvdSuQiXG-nvRxUlHE4gRfffPnMpOcirAT-nyVdpg9iW7-ZsfFWrPJyoeSWNlri6ODM1OIpApd5YbI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+</section>
+<!-- Body Section -->
+<article class="max-w-[800px] mx-auto article-content">
+<h2 class="font-headline-md text-headline-md mb-6 text-primary">Introduction à React 19</h2>
+<p>
+                React 19 marque une étape historique dans l'évolution de la bibliothèque avec l'introduction stable des <strong>Server Components</strong>. Cette technologie change radicalement notre manière de concevoir l'hydratation et le transfert de données entre le serveur et le client.
+            </p>
+<p>
+                Contrairement aux composants traditionnels, les Server Components ne s'exécutent que sur le serveur. Cela permet de réduire drastiquement le poids du bundle JavaScript envoyé au navigateur, tout en améliorant les performances de chargement initial.
+            </p>
+<div class="pull-quote font-body-lg text-body-lg">
+                "Les Server Components ne sont pas seulement une amélioration de performance, c'est un nouveau paradigme qui fusionne le meilleur du rendu serveur avec l'interactivité du client."
+            </div>
+<h3 class="font-headline-md text-[20px] mb-4 font-bold">Implémentation d'un composant serveur</h3>
+<p>
+                Voici comment structurer un composant qui récupère des données directement depuis une base de données sans passer par une API intermédiaire :
+            </p>
+<div class="code-block mb-8">
+<pre><code><span class="comment">// app/posts/page.js</span>
+<span class="keyword">import</span> { db } <span class="keyword">from</span> <span class="string">'@/lib/database'</span>;
+
+<span class="keyword">async function</span> <span class="function">BlogPost</span>({ id }) {
+  <span class="keyword">const</span> post = <span class="keyword">await</span> db.posts.<span class="function">findUnique</span>({ where: { id } });
+
+  <span class="keyword">return</span> (
+    &lt;<span class="function">article</span>&gt;
+      &lt;<span class="function">h1</span>&gt;{post.title}&lt;/<span class="function">h1</span>&gt;
+      &lt;<span class="function">p</span>&gt;{post.content}&lt;/<span class="function">p</span>&gt;
+    &lt;/<span class="function">article</span>&gt;
+  );
+}</code></pre>
+</div>
+<p>
+                L'utilisation de <code>async/await</code> directement dans la fonction du composant simplifie énormément la gestion du state asynchrone, éliminant le besoin de <code>useEffect</code> complexes pour le fetching initial.
+            </p>
+<div class="my-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mb-3">speed</span>
+<h4 class="font-bold mb-2">Performance accrue</h4>
+<p class="text-sm !mb-0 opacity-80">Zéro JavaScript envoyé pour les composants statiques, réduisant le temps de Time to Interactive.</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mb-3">security</span>
+<h4 class="font-bold mb-2">Sécurité native</h4>
+<p class="text-sm !mb-0 opacity-80">Les secrets d'API et les requêtes DB restent sur le serveur, hors de portée du client.</p>
+</div>
+</div>
+</article>
+<!-- Divider -->
+<hr class="max-w-[800px] mx-auto my-16 border-outline-variant"/>
+<!-- Comments Section -->
+<section class="max-w-[800px] mx-auto pb-stack-lg">
+<h3 class="font-headline-md text-headline-md mb-8 flex items-center gap-2">
+                Commentaires <span class="text-on-surface-variant font-normal opacity-50">(12)</span>
+</h3>
+<!-- Comment Input -->
+<div class="mb-12 bg-white p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex gap-4 mb-4">
+<div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a smiling web developer in his thirties, wearing a modern minimalist navy blue hoodie. Soft lighting with a neutral, bright tech-office background. High resolution, professional photography aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrHW5JTvOGh0ggbw2HNy4MT7zvv_p1FGGVxhoZTwCBpZXgOaawAH602qdM4n7ZOQY2HR7NR7z53h87WrYLD-lvf_sS7REj_bhfeYxI040jS--1LVAklylA-AyHT7_124AIi24EWiouy4Ro440XZELWE8VL0BACRIBgRdNj5hnd8RlZgAX_1Lntdr5vdId-4Ce8tQyJL8Irn2mBiubdIHlrDtFUgC11-algLaP00UloenWolXP1EacIldoIVyM5QGwDYKDViQChGzM"/>
+</div>
+<div class="flex-grow">
+<textarea class="w-full border-outline-variant focus:border-primary focus:ring-primary-fixed rounded-lg p-3 text-sm min-h-[100px] transition-all" placeholder="Publier un commentaire..." rows="4"></textarea>
+</div>
+</div>
+<div class="flex justify-end">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-all active:scale-95">
+                        Publier un commentaire
+                    </button>
+</div>
+</div>
+<!-- List of Comments -->
+<div class="space-y-8">
+<!-- Comment 1 -->
+<div class="flex gap-4 group">
+<div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young female developer with curly dark hair, wearing a stylish green sweater. She is looking thoughtfully at the camera. Warm, modern workspace lighting with soft bokeh. Minimalist and professional tech-focused photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiyijC__FVlo_0fQCIsUSfaJ5QnVfgE1gfVkhLb5ZAYHtXi7YD5DNagX9GF4Mkix6_o5wUqebd9tlpSm4GviRIclaPg4jJzmOZOhbzIRa7lZInrY2fFxPFfpgyA8qXZOGk_7sCESZ6FFPssR5WYXKXDcJRZc2QRBX8qJPpHckDvqiGo2aKUDfD1S3XJu5l-Pp5H5AtGrbugpmNhvGbvjJYQvFFzXfJdNG-Z3g_flXps8CtIgYI-_FLP2vWmrUjpkCr3ZABQRrAteI"/>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold">Sophie Martin</span>
+<span class="text-on-surface-variant text-xs">• Il y a 2 heures</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed">
+                            Excellent article ! Je me demandais comment gérer le partage d'état entre les Server Components et les Client Components imbriqués sans trop de complexité ?
+                        </p>
+<div class="flex items-center gap-4 mt-3">
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 4
+                            </button>
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">reply</span> Répondre
+                            </button>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-4 group">
+<div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait of a senior male developer in his 40s with a graying beard and a focused, intelligent expression. He is wearing a casual gray linen shirt. The lighting is crisp and natural, emphasizing a professional, academic tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB56eHIPsfhFdVaTEp_WXhH8qC6qKIsj4z6SWNSHdcTXcE01WSR4Dq46MiJOys3qmiPvoe7_K6ZzUcdpAkvpFeVc3TukdrktQB_6oc3sg6R5Fh_Ll-i2sYHAUMU5-bCjkJXxAGzUrKkhhioFVmDf1Ap37N48Ml_3KN9l_JkWm3EOflGHsGJE3gun20ojhknqGZKiXrO9X-znfTl-B4_JRSNsBpRwSifMoFDm-ZEra0H_yRl77SpCXegGfRzjZJ21nzEMvLJkzoQwzU"/>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold">Marc Lefebvre</span>
+<span class="text-on-surface-variant text-xs">• Il y a 5 heures</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed">
+                            L'exemple avec Prisma est très parlant. C'est fou comme on revient à un modèle proche du PHP mais avec toute la puissance réactive de React. Merci Lucas !
+                        </p>
+<div class="flex items-center gap-4 mt-3">
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 12
+                            </button>
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">reply</span> Répondre
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-on-background border-t border-outline-variant">
+<div class="w-full py-stack-lg px-margin-desktop max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">DevThèque</span>
+<p class="text-on-surface-variant dark:text-surface-variant text-sm max-w-xs text-center md:text-left">
+                    Partagez vos connaissances, apprenez des meilleurs et construisons ensemble le futur du développement.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-label-caps text-label-caps">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-secondary-fixed transition-colors" href="#">À PROPOS</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-secondary-fixed transition-colors" href="#">CONFIDENTIALITÉ</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-secondary-fixed transition-colors" href="#">CONDITIONS</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-secondary-fixed transition-colors" href="#">CONTACT</a>
+</div>
+<div class="flex flex-col items-center md:items-end gap-2">
+<div class="flex gap-4">
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-white transition-all" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.454-1.152-1.11-1.459-1.11-1.459-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.92.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.48C19.137 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-white transition-all" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
+</a>
+</div>
+<span class="text-on-surface-variant dark:text-surface-variant text-[10px] tracking-widest opacity-60">© 2024 DEVTHÈQUE. TOUS DROITS RÉSERVÉS.</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave',</script></body></html>

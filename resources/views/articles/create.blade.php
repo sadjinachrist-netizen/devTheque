@@ -16,13 +16,24 @@
                     </div>
 
                     <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                        <select name="category_id" class="w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="">— Aucune catégorie —</option>
+                            @foreach ($categories as $categorie)
+                                <option value="{{ $categorie->id }}" @selected(old('category_id') == $categorie->id)>{{ $categorie->nom }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Contenu</label>
                         <textarea name="contenu" rows="8" class="w-full border-gray-300 rounded-md shadow-sm">{{ old('contenu') }}</textarea>
                         @error('contenu') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Publier</button>
+                        <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-md hover:bg-brand-blue-dark">Publier</button>
                         <a href="{{ route('articles.index') }}" class="text-gray-600 hover:underline">Annuler</a>
                     </div>
                 </form>

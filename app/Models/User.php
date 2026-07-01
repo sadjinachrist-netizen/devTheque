@@ -18,10 +18,11 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -52,5 +53,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);
     }
-    
+
+
+        // Un utilisateur peut faire des demandes pour devenir auteur
+    public function authorRequests()
+    {
+        return $this->hasMany(AuthorRequest::class);
+    }
+
+    // --- Raccourcis pour tester le rôle ---
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isAuteur(): bool
+    {
+        return $this->role === 'auteur';
+    }
+
+    public function isLecteur(): bool
+    {
+        return $this->role === 'lecteur';
+    }
+
 }
