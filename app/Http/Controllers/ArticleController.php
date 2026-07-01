@@ -34,8 +34,9 @@ class ArticleController extends Controller
                          ->with('succes', 'Article publié avec succès !');
     }
 
-    public function show(Article $article)
+        public function show(Article $article)
     {
+        $article->load('user', 'category', 'comments.user');
         return view('articles.show', ['article' => $article]);
     }
 

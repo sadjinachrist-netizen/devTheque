@@ -61,6 +61,12 @@ class User extends Authenticatable
         return $this->hasMany(AuthorRequest::class);
     }
 
+        // Un utilisateur a écrit plusieurs commentaires
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     // --- Raccourcis pour tester le rôle ---
     public function isAdmin(): bool
     {

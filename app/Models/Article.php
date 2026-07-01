@@ -19,4 +19,10 @@ class Article extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    // Un article a plusieurs commentaires
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

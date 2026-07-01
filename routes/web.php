@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorRequestController;
+use App\Http\Controllers\CommentController;
 
 // Page d'accueil -> on redirige vers la liste des articles
 Route::get('/', function () {
@@ -36,6 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/devenir-auteur', [AuthorRequestController::class, 'create'])->name('author-requests.create');
     Route::post('/devenir-auteur', [AuthorRequestController::class, 'store'])->name('author-requests.store');
+});
+
+
+// 💬 Commentaires (tout utilisateur connecté peut commenter)
+    Route::middleware('auth')->group(function () {
+    Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 // ===== Espace ADMIN (réservé au rôle admin) =====
