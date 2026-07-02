@@ -102,6 +102,11 @@
                 <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
                     {{ __('Messages') }} @if ($nonLusMessages > 0) ({{ $nonLusMessages }}) @endif
                 </x-responsive-nav-link>
+
+              <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                    {{ __('Notifications') }} @if ($nonLuesNotifs > 0) ({{ $nonLuesNotifs }}) @endif
+                </x-responsive-nav-link>
+
                 @if (auth()->user()->isAuteur() || auth()->user()->isAdmin())
                     <x-responsive-nav-link :href="route('articles.create')">{{ __('+ Nouvel article') }}</x-responsive-nav-link>
                 @endif
