@@ -17,6 +17,9 @@ class CategorySeeder extends Seeder
             'DevOps',
             'Mobile',
             'Data & Bases de données',
+            'Réseaux',
+            'Design UI/UX',
+            'Mathématiques appliquées',
         ];
 
         foreach ($categories as $nom) {
