@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Comment;
+use App\Notifications\CommentLiked;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    // Poster un commentaire sur un article
     public function store(Request $request, Article $article)
     {
-        $request->validate([
-            'contenu' => 'required|min:2|max:2000',
-        ]);
+        $request->validate(['contenu' => 'required|min:2|max:2000']);
 
         $article->comments()->create([
             'contenu' => $request->contenu,
@@ -23,7 +21,6 @@ class CommentController extends Controller
         return back()->with('succes', 'Commentaire publié !');
     }
 
-    // Supprimer un commentaire (son auteur OU l'admin)
     public function destroy(Comment $comment)
     {
         if ($comment->user_id !== auth()->id() && ! auth()->user()->isAdmin()) {
@@ -33,5 +30,17 @@ class CommentController extends Controller
         $comment->delete();
 
         return back()->with('succes', 'Commentaire supprimé.');
+    }
+
+    public function like(Comment $comment)
+    {
+        $resultat = $comment->likers()->toggle(auth()->id());
+
+        // Uniquement pour un NOUVEAU like, et pas sur son propre commentaire
+        if (in_array(auth()->id(), $resultat['attached']) && $comment->user_id != auth()->id()) {
+            $comment->user->notify(new CommentLiked(auth()->user(), $comment));
+        }
+
+        return back();
     }
 }

@@ -83,4 +83,23 @@ class User extends Authenticatable
         return $this->role === 'lecteur';
     }
 
+
+        // Messages envoyés par cet utilisateur
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    // Messages reçus par cet utilisateur
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+        // Les commentaires que cet utilisateur a likés (many-to-many)
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'comment_likes')->withTimestamps();
+    }
+
 }

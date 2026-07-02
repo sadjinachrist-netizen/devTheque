@@ -6,7 +6,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm rounded-lg p-6">
-                <form action="{{ route('articles.store') }}" method="POST">
+                <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-4">
@@ -24,6 +24,13 @@
                             @endforeach
                         </select>
                         @error('category_id') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Image de couverture <span class="text-gray-400">(optionnel)</span></label>
+                        <input type="file" name="image" accept="image/*"
+                               class="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-brand-blue file:text-white file:cursor-pointer hover:file:bg-brand-blue-dark">
+                        @error('image') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">

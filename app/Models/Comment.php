@@ -19,4 +19,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Article::class);
     }
+
+        // Les utilisateurs qui ont liké ce commentaire (many-to-many)
+    public function likers()
+    {
+        return $this->belongsToMany(User::class, 'comment_likes')->withTimestamps();
+    }
 }

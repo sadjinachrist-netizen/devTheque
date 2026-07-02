@@ -58,12 +58,16 @@
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse ($articles as $article)
                     <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
-                        <div class="h-32 bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center">
-                            <svg width="44" height="44" viewBox="0 0 84 84" fill="none">
-                                <polyline points="34,26 22,42 34,58" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                                <polyline points="50,26 62,42 50,58" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
+                       @if ($article->image)
+                            <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->titre }}" class="h-32 w-full object-cover">
+                        @else
+                            <div class="h-32 bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center">
+                                <svg width="44" height="44" viewBox="0 0 84 84" fill="none">
+                                    <polyline points="34,26 22,42 34,58" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polyline points="50,26 62,42 50,58" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        @endif
 
                         <div class="p-6 flex flex-col flex-1">
                             @if ($article->category)

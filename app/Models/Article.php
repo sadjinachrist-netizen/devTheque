@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['titre', 'contenu', 'category_id'];
+    protected $fillable = ['titre', 'contenu', 'category_id', 'image'];
 
     // Un article appartient à un utilisateur (auteur)
     public function user()

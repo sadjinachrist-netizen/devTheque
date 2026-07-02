@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -26,17 +27,23 @@ class ArticleController extends Controller
             'titre'       => 'required|max:255',
             'contenu'     => 'required',
             'category_id' => 'nullable|exists:categories,id',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $donnees['image'] = $request->file('image')->store('articles', 'public');
+        } else {
+            unset($donnees['image']);
+        }
 
         $request->user()->articles()->create($donnees);
 
-        return redirect()->route('articles.index')
-                         ->with('succes', 'Article publié avec succès !');
+        return redirect()->route('articles.index')->with('succes', 'Article publié avec succès !');
     }
 
-        public function show(Article $article)
+    public function show(Article $article)
     {
-        $article->load('user', 'category', 'comments.user');
+        $article->load('user', 'category', 'comments.user', 'comments.likers');
         return view('articles.show', ['article' => $article]);
     }
 
@@ -55,21 +62,33 @@ class ArticleController extends Controller
             'titre'       => 'required|max:255',
             'contenu'     => 'required',
             'category_id' => 'nullable|exists:categories,id',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($article->image) {
+                Storage::disk('public')->delete($article->image);
+            }
+            $donnees['image'] = $request->file('image')->store('articles', 'public');
+        } else {
+            unset($donnees['image']);
+        }
 
         $article->update($donnees);
 
-        return redirect()->route('articles.show', $article)
-                         ->with('succes', 'Article modifié !');
+        return redirect()->route('articles.show', $article)->with('succes', 'Article modifié !');
     }
 
     public function destroy(Article $article)
     {
         $this->verifierProprietaire($article);
+
+        if ($article->image) {
+            Storage::disk('public')->delete($article->image);
+        }
         $article->delete();
 
-        return redirect()->route('articles.index')
-                         ->with('succes', 'Article supprimé.');
+        return redirect()->route('articles.index')->with('succes', 'Article supprimé.');
     }
 
     private function verifierProprietaire(Article $article)
