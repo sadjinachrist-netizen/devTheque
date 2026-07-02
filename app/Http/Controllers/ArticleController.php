@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -31,7 +31,7 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $donnees['image'] = $request->file('image')->store('articles', 'public');
+            $donnees['image'] = $this->uploadImage($request->file('image'));
         } else {
             unset($donnees['image']);
         }
@@ -66,10 +66,7 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($article->image) {
-                Storage::disk('public')->delete($article->image);
-            }
-            $donnees['image'] = $request->file('image')->store('articles', 'public');
+            $donnees['image'] = $this->uploadImage($request->file('image'));
         } else {
             unset($donnees['image']);
         }
@@ -82,10 +79,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $this->verifierProprietaire($article);
-
-        if ($article->image) {
-            Storage::disk('public')->delete($article->image);
-        }
         $article->delete();
 
         return redirect()->route('articles.index')->with('succes', 'Article supprimé.');
@@ -96,5 +89,15 @@ class ArticleController extends Controller
         if ($article->user_id !== auth()->id()) {
             abort(403, "Tu n'es pas l'auteur de cet article.");
         }
+    }
+
+    // Upload vers Cloudinary → renvoie l'URL permanente
+    private function uploadImage($fichier): string
+    {
+        $cloudinary = new Cloudinary(env('CLOUDINARY_URL'));
+        $resultat = $cloudinary->uploadApi()->upload($fichier->getRealPath(), [
+            'folder' => 'devtheque',
+        ]);
+        return $resultat['secure_url'];
     }
 }

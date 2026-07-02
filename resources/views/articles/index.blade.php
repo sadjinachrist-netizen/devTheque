@@ -59,7 +59,7 @@
                 @forelse ($articles as $article)
                     <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
                        @if ($article->image)
-                            <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->titre }}" class="h-32 w-full object-cover">
+                            <img src="{{ $article->image }}" alt="{{ $article->titre }}" class="h-32 w-full object-cover">
                         @else
                             <div class="h-32 bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center">
                                 <svg width="44" height="44" viewBox="0 0 84 84" fill="none">

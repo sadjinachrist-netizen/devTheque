@@ -44,7 +44,7 @@
             </div>
 
             @if ($article->image)
-                <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->titre }}" class="w-full rounded-2xl mt-8 object-cover max-h-96">
+                                <img src="{{ $article->image }}" alt="{{ $article->titre }}" class="w-full rounded-2xl mt-8 object-cover max-h-96">
             @endif
 
             <div class="text-slate-700 mt-8 whitespace-pre-line leading-relaxed">{{ $article->contenu }}</div>
